@@ -14,12 +14,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) Chad Dettmering
+Copyright (c) 2015 Chad Dettmering, Katie Jurek
 
 Authors:
     Chad Dettmering    chad.dettmering@gmail.com
+	Katie Jurek            admin@katiejurek.com
 -}
 
 module Command where
+import Room
+import Player
 
 data Command = Go
+go :: Room -> Player
+go (Room {title = t, desc = d, exits = e, roomId = rid}) = Player rid

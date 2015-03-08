@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) Katie Jurek, Chad Dettmering
+Copyright (c) 2015 Katie Jurek, Chad Dettmering
 
 Authors:
     Katie Jurek        hieiforevermine@yahoo.com
