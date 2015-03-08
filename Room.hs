@@ -14,12 +14,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) Katie Jurek
+Copyright (c) Katie Jurek, Chad Dettmering
 
 Authors:
-    Katie Jurek    hieiforevermine@yahoo.com
+    Katie Jurek        hieiforevermine@yahoo.com
+    Chad Dettmering    chad.dettmering@gmail.com
 -}
 
 module Room where
 type RoomID = Int
 data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID}
+
+instance Show Room where
+    show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d
