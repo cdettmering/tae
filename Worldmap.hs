@@ -14,13 +14,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) 2015 Chad Dettmering
+Copyright (c) 2015 Katie Jurek
 
 Authors:
-    Chad Dettmering    chad.dettmering@gmail.com
+    Katie Jurek    admin@katiejurek.com
 -}
 
-module Player where
+module Worldmap where
+import qualified Data.Map as M
 import Room
 
-data Player = Player {loc :: RoomID}
+worldMap = M.fromList [("Start", Room {title = "Start", desc = "Starting room", exits = ["End"], roomId = "Start"}), ("End", Room {title = "End", desc = "Ending room", exits = ["End"], roomId = "End"})]

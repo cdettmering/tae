@@ -14,13 +14,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) 2015 Chad Dettmering
+Copyright (c) 2015 Katie Jurek
 
 Authors:
-    Chad Dettmering    chad.dettmering@gmail.com
+    Katie Jurek    admin@katiejurek.com
 -}
 
-module Player where
-import Room
+import qualified Data.Map as M
+import Data.Maybe
+import Player
+import qualified Room
+import Worldmap
 
-data Player = Player {loc :: RoomID}
+player = Player "Start"
+roomId = loc player
+room = fromJust (M.lookup roomId worldMap)
+main = do print room
