@@ -24,7 +24,11 @@ Authors:
 module Command where
 import Room
 import Player
+import World
 
-data Command = Go
-go :: Room -> Player
-go (Room {title = t, desc = d, exits = e, roomId = rid}) = Player rid
+go :: RoomID -> World -> World
+go rid w = case (getPlayerRoom w) of
+                Just room -> case (isValidExit rid room) of
+                                True -> World (Player rid) (wmap w)
+                                False -> w
+                Nothing -> w

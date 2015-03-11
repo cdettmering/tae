@@ -26,3 +26,7 @@ data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: 
 
 instance Show Room where
     show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d
+
+
+isValidExit :: RoomID -> Room -> Bool
+isValidExit rid r = elem rid (exits r)
