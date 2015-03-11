@@ -25,4 +25,9 @@ type RoomID = String
 data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID}
 
 instance Show Room where
-    show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d
+    show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d ++ "\n" ++ "You can go to: " ++ listToString e
+
+listToString :: [RoomID] -> String
+listToString [] = ""
+listToString (x:[]) = x
+listToString (x:xs) = x ++ ", " ++ listToString xs
