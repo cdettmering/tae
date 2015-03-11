@@ -37,6 +37,6 @@ splitOnWhiteSpace :: String -> [String]
 splitOnWhiteSpace s = S.splitOn " " s
 
 parse :: [String] -> World -> World
-parse ("goto":room:[]) w = go room w
+parse ("go":"to":room:[]) w = go room w
 parse ("go":room:[]) w = go room w
 parse x w = w
