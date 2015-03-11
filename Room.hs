@@ -31,3 +31,6 @@ listToString :: [RoomID] -> String
 listToString [] = ""
 listToString (x:[]) = x
 listToString (x:xs) = x ++ ", " ++ listToString xs
+
+isValidExit :: RoomID -> Room -> Bool
+isValidExit rid r = elem rid (exits r)

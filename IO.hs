@@ -1,3 +1,4 @@
+
 {-
 This file is part of TAE.
 
@@ -17,11 +18,25 @@ along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (c) 2015 Katie Jurek
 
 Authors:
-    Katie Jurek    admin@katiejurek.com
+    Chad Dettmering     chad.dettmering@gmail.com
 -}
 
-module Worldmap where
-import qualified Data.Map as M
-import Room
+module IO where
+import qualified Data.Text as T 
+import qualified Data.List.Split as S
+import Command
+import World
 
-worldMap = M.fromList [("Start", Room {title = "Start", desc = "Starting room", exits = ["End"], roomId = "Start"}), ("End", Room {title = "End", desc = "Ending room", exits = ["End"], roomId = "End"})]
+isSpace :: Char -> Bool
+isSpace c = c == ' '
+
+stripWhiteSpace :: String -> String
+stripWhiteSpace t = T.unpack (T.filter (\x -> not (isSpace x)) (T.pack t))
+
+splitOnWhiteSpace :: String -> [String]
+splitOnWhiteSpace s = S.splitOn " " s
+
+parse :: [String] -> World -> World
+parse ("goto":room:[]) w = go room w
+parse ("go":room:[]) w = go room w
+parse x w = w

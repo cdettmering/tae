@@ -20,13 +20,22 @@ Authors:
     Katie Jurek    admin@katiejurek.com
 -}
 
-import qualified Data.Map as M
 import Data.Maybe
-import Player
-import qualified Room
-import Worldmap
+import qualified Data.Map as M
+import qualified World as W
+import qualified IO as I
 
-player = Player "Start"
-roomId = loc player
-room = fromJust (M.lookup roomId worldMap)
-main = do print room
+gameIOLoop :: W.World -> IO()
+gameIOLoop w = case (W.getPlayerRoom w) of
+                   Just room -> do 
+                                   print room
+                                   input <- getLine
+                                   let g = gameLoop input w
+                                   gameIOLoop g
+                   Nothing -> error "Room doesn't exist!"
+
+gameLoop :: String -> W.World -> W.World
+gameLoop s w = I.parse (I.splitOnWhiteSpace s) w
+
+main :: IO()
+main = let world = W.createWorld in gameIOLoop world
