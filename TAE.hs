@@ -21,17 +21,23 @@ Authors:
     Chad Dettmering     chad.dettmering@gmail.com
 -}
 
-module Room where
-import IOUtils
+import Data.Maybe
+import qualified Data.Map as M
+import qualified World as W
+import qualified IO as I
+import qualified IOUtils as IU
 
-type RoomID = String
-data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID}
+gameIOLoop :: W.World -> IO()
+gameIOLoop w = case (W.getPlayerRoom w) of
+                   Just room -> do 
+                                   print room
+                                   input <- getLine
+                                   let g = gameLoop input w
+                                   gameIOLoop g
+                   Nothing -> error "Room doesn't exist!"
 
-instance Show Room where
-    show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d ++ "\n" ++ "You can go to: " ++ (listToString ", " e)
+gameLoop :: String -> W.World -> W.World
+gameLoop s w = I.parse (IU.splitOnWhiteSpace s) w
 
-{-
- - Given a RoomID and a Room, checks if RoomID is an exit of Room
--}
-isValidExit :: RoomID -> Room -> Bool
-isValidExit rid r = elem rid (exits r)
+main :: IO()
+main = let world = W.createWorld in gameIOLoop world

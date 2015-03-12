@@ -22,39 +22,14 @@ Authors:
 -}
 
 module IO where
-import qualified Data.Text as T 
-import qualified Data.List.Split as S
 import Command
 import World
-
-{-
- - Checks if Char is a space
--}
-isSpace :: Char -> Bool
-isSpace c = c == ' '
-
-{-
- - Strips out all whitespace from String
--}
-stripWhiteSpace :: String -> String
-stripWhiteSpace t = T.unpack (T.filter (\x -> not (isSpace x)) (T.pack t))
-
-{-
- - Turns a white space separated String into a list of Strings
- - Example: "This is a sentence" -> ["This", "is", "a", "sentence"]
--}
-splitOnWhiteSpace :: String -> [String]
-splitOnWhiteSpace s = S.splitOn " " s
-
-listToString :: [String] -> String
-listToString [] = ""
-listToString (x:[]) = x
-listToString (x:xs) = x ++ ", " ++ listToString xs
+import IOUtils
 
 {-
  - Given the player input as a [String], parse the input and execute the command if any.
 -}
 parse :: [String] -> World -> World
-parse ("go":"to":room) w = go (listToString room) w
-parse ("go":room) w = go (listToString room) w
+parse ("go":"to":room) w = go (listToString " " room) w
+parse ("go":room) w = go (listToString " " room) w
 parse x w = w
