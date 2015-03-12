@@ -43,13 +43,19 @@ createWorld = World
                            ("East Path", Room {title = "East Path", desc = "East Path", exits = ["Courtyard", "Bedroom", "SouthEast Tower", "Graveyard"], roomId = "East Path"}),
                            ("West Path", Room {title = "West Path", desc = "West Path", exits = ["Courtyard", "Kitchen", "SouthWest Tower"], roomId = "West Path"}),
                            ("SouthWest Tower", Room {title = "SouthWest Tower", desc = "SouthWest Tower", exits = ["Courtyard", "West Path"], roomId = "SouthWest Tower"}),
-                           ("SouthEast Tower", Room {title = "SouthEast Tower", desc = "SouthEast Tower", exits = ["Courtyard", "East Path"], roomId = "SouthEast Tower"})
+                           ("SouthEast Tower", Room {title = "SouthEast Tower", desc = "SouthEast Tower", exits = ["Courtyard", "East Path"], roomId = "SouthEast Tower"}),
                            ("Graveyard", Room {title = "Graveyard", desc = "Graveyard", exits = ["Courtyard", "East Path"], roomId = "Graveyard"})
                         ]
               }
 
+{-
+ - Given a RoomID and the World, return the Room that matches the RoomID, if any
+-}
 getRoom :: RoomID -> World -> Maybe Room
 getRoom r World {player = p, wmap = w}  = M.lookup r w
 
+{-
+ - Get the Room the Player is currently in
+-}
 getPlayerRoom :: World -> Maybe Room
 getPlayerRoom w = getRoom (P.loc (player w)) w 
