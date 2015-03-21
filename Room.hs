@@ -23,12 +23,17 @@ Authors:
 
 module Room where
 import IOUtils
+import qualified Object as O
 
 type RoomID = String
-data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID}
+data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID, objects :: [O.Object]}
 
 instance Show Room where
-    show (Room {title = t, desc = d, exits = e, roomId = r}) = t ++ "\n\n" ++ d ++ "\n" ++ "You can go to: " ++ (listToString ", " e)
+    show (Room {title = t, desc = d, exits = e, roomId = r, objects = o}) = t ++ "\n\n" ++ d ++ "\n" ++ "You can go to: " ++ (listToString ", " e) ++ objectsString o
+
+objectsString :: [O.Object] -> String
+objectsString [] = ""
+objectsString objs = "\nYou can see: " ++ (listToString ", " (O.names objs))
 
 {-
  - Given a RoomID and a Room, checks if RoomID is an exit of Room

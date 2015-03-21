@@ -24,6 +24,7 @@ Authors:
 module World where
 import qualified Data.Map as M
 import qualified Player as P
+import qualified Object as O
 import Room
 
 data World = World {player :: P.Player, wmap :: M.Map RoomID Room}
@@ -34,17 +35,17 @@ createWorld = World
                   player = P.Player "Dirt Trail",
                   wmap = M.fromList
                         [
-                           ("Dirt Trail", Room {title = "Dirt Trail", desc = "Dirt trail leading to castle", exits = ["Drawbridge"], roomId = "Dirt Trail"}),
-                           ("Drawbridge", Room {title = "Drawbridge", desc = "Drawbridge over moat", exits = ["Courtyard", "Dirt Trail"], roomId = "Drawbridge"}),
-                           ("Courtyard", Room {title = "Courtyard", desc = "Courtyard", exits = ["Drawbridge", "Grand Hall", "SouthWest Tower", "SouthEast Tower", "West Path", "East Path", "Graveyard"], roomId = "Courtyard"}),
-                           ("Grand Hall", Room {title = "Grand Hall", desc = "Grand Hall", exits = ["Kitchen", "Bedroom", "Courtyard"], roomId = "Grand Hall"}),
-                           ("Kitchen", Room {title = "Kitchen", desc = "Kitchen", exits = ["Grand Hall", "West Path"], roomId = "Kitchen"}),
-                           ("Bedroom", Room {title = "Bedroom", desc = "Bedroom", exits = ["Grand Hall", "East Path"], roomId = "Bedroom"}),
-                           ("East Path", Room {title = "East Path", desc = "East Path", exits = ["Courtyard", "Bedroom", "SouthEast Tower", "Graveyard"], roomId = "East Path"}),
-                           ("West Path", Room {title = "West Path", desc = "West Path", exits = ["Courtyard", "Kitchen", "SouthWest Tower"], roomId = "West Path"}),
-                           ("SouthWest Tower", Room {title = "SouthWest Tower", desc = "SouthWest Tower", exits = ["Courtyard", "West Path"], roomId = "SouthWest Tower"}),
-                           ("SouthEast Tower", Room {title = "SouthEast Tower", desc = "SouthEast Tower", exits = ["Courtyard", "East Path"], roomId = "SouthEast Tower"}),
-                           ("Graveyard", Room {title = "Graveyard", desc = "Graveyard", exits = ["Courtyard", "East Path"], roomId = "Graveyard"})
+                           ("Dirt Trail", Room {title = "Dirt Trail", desc = "Dirt trail leading to castle", exits = ["Drawbridge"], roomId = "Dirt Trail", objects = [O.Object {O.name = "stick", O.desc = "stick from a tree"}]}),
+                           ("Drawbridge", Room {title = "Drawbridge", desc = "Drawbridge over moat", exits = ["Courtyard", "Dirt Trail"], roomId = "Drawbridge", objects = []}),
+                           ("Courtyard", Room {title = "Courtyard", desc = "Courtyard", exits = ["Drawbridge", "Grand Hall", "SouthWest Tower", "SouthEast Tower", "West Path", "East Path", "Graveyard"], roomId = "Courtyard", objects = []}),
+                           ("Grand Hall", Room {title = "Grand Hall", desc = "Grand Hall", exits = ["Kitchen", "Bedroom", "Courtyard"], roomId = "Grand Hall", objects = []}),
+                           ("Kitchen", Room {title = "Kitchen", desc = "Kitchen", exits = ["Grand Hall", "West Path"], roomId = "Kitchen", objects = []}),
+                           ("Bedroom", Room {title = "Bedroom", desc = "Bedroom", exits = ["Grand Hall", "East Path"], roomId = "Bedroom", objects = []}),
+                           ("East Path", Room {title = "East Path", desc = "East Path", exits = ["Courtyard", "Bedroom", "SouthEast Tower", "Graveyard"], roomId = "East Path", objects = []}),
+                           ("West Path", Room {title = "West Path", desc = "West Path", exits = ["Courtyard", "Kitchen", "SouthWest Tower"], roomId = "West Path", objects = []}),
+                           ("SouthWest Tower", Room {title = "SouthWest Tower", desc = "SouthWest Tower", exits = ["Courtyard", "West Path"], roomId = "SouthWest Tower", objects = []}),
+                           ("SouthEast Tower", Room {title = "SouthEast Tower", desc = "SouthEast Tower", exits = ["Courtyard", "East Path"], roomId = "SouthEast Tower", objects = []}),
+                           ("Graveyard", Room {title = "Graveyard", desc = "Graveyard", exits = ["Courtyard", "East Path"], roomId = "Graveyard", objects = []})
                         ]
               }
 
