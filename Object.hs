@@ -21,9 +21,13 @@ Authors:
 -}
 
 module Object where
- 
-data Object = Object {name :: String, desc :: String}
 
+type ObjectID = String 
+data Object = Object {name :: String, desc :: String, objectId :: ObjectID,  pickable :: Bool} deriving Eq
+
+{-
+ - Puts the names of the Objects into a list of Strings
+-}
 names :: [Object] -> [String]
 names [] = []
 names (x:xs) = name x : names xs

@@ -24,13 +24,27 @@ Authors:
 module Room where
 import IOUtils
 import qualified Object as O
+import qualified Data.List as L
 
 type RoomID = String
 data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID, objects :: [O.Object]}
 
-instance Show Room where
-    show (Room {title = t, desc = d, exits = e, roomId = r, objects = o}) = t ++ "\n\n" ++ d ++ "\n" ++ "You can go to: " ++ (listToString ", " e) ++ objectsString o
+{-
+ - Gives a human readable String of the Room
+-}
+roomString :: Room -> String
+roomString r = (title r) ++ "\n\n" ++ (desc r) ++ (exitsString (exits r)) ++ (objectsString (objects r))
 
+{-
+ - Gives a human readable String representation of the exits in the Room
+-}
+exitsString :: [RoomID] -> String
+exitsString [] = ""
+exitsString exts = "\nYou can go to: " ++ (listToString ", " exts)
+
+{-
+ - Gives a human readable String representation of the objects in the Room
+-}
 objectsString :: [O.Object] -> String
 objectsString [] = ""
 objectsString objs = "\nYou can see: " ++ (listToString ", " (O.names objs))
@@ -40,3 +54,17 @@ objectsString objs = "\nYou can see: " ++ (listToString ", " (O.names objs))
 -}
 isValidExit :: RoomID -> Room -> Bool
 isValidExit rid r = elem rid (exits r)
+
+{-
+ - Retrieves an Object from the Room given the ObjectID, if it exists
+-}
+getObject :: O.ObjectID -> Room -> Maybe O.Object
+getObject oid r = L.find (\x -> if O.objectId x == oid then True else False) (objects r)
+
+{-
+ - Removes the Object from the Room that corresponds to the given ObjectID
+-}
+removeObject :: O.ObjectID -> Room -> Room
+removeObject oid r = case (getObject oid r) of
+                        Just object -> Room (title r) (desc r) (exits r) (roomId r) (L.delete object (objects r))
+                        Nothing -> r

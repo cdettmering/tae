@@ -27,15 +27,16 @@ import qualified Player as P
 import qualified Object as O
 import Room
 
-data World = World {player :: P.Player, wmap :: M.Map RoomID Room}
+type WorldMap = M.Map RoomID Room
+data World = World {player :: P.Player, wmap :: WorldMap}
 
 createWorld :: World
 createWorld = World
               {
-                  player = P.Player "Dirt Trail",
+                  player = P.Player "Dirt Trail" [],
                   wmap = M.fromList
                         [
-                           ("Dirt Trail", Room {title = "Dirt Trail", desc = "Dirt trail leading to castle", exits = ["Drawbridge"], roomId = "Dirt Trail", objects = [O.Object {O.name = "stick", O.desc = "stick from a tree"}]}),
+                           ("Dirt Trail", Room {title = "Dirt Trail", desc = "Dirt trail leading to castle", exits = ["Drawbridge"], roomId = "Dirt Trail", objects = [O.Object {O.name = "stick", O.desc = "stick from a tree", O.objectId = "stick", O.pickable = True}]}),
                            ("Drawbridge", Room {title = "Drawbridge", desc = "Drawbridge over moat", exits = ["Courtyard", "Dirt Trail"], roomId = "Drawbridge", objects = []}),
                            ("Courtyard", Room {title = "Courtyard", desc = "Courtyard", exits = ["Drawbridge", "Grand Hall", "SouthWest Tower", "SouthEast Tower", "West Path", "East Path", "Graveyard"], roomId = "Courtyard", objects = []}),
                            ("Grand Hall", Room {title = "Grand Hall", desc = "Grand Hall", exits = ["Kitchen", "Bedroom", "Courtyard"], roomId = "Grand Hall", objects = []}),
@@ -60,3 +61,35 @@ getRoom r World {player = p, wmap = w}  = M.lookup r w
 -}
 getPlayerRoom :: World -> Maybe Room
 getPlayerRoom w = getRoom (P.loc (player w)) w 
+
+{-
+ - Replaces the Room corresponding to the given RoomId with the new given
+ - Room in the WorldMap
+-}
+replaceRoom :: RoomID -> Room -> WorldMap -> WorldMap
+replaceRoom rid r w = M.adjust (\x -> r) rid w
+
+{-
+ - Transfers the Object corresponding to the given ObjectID from the Room corresponding
+ - to the given RoomID to the Player
+-}
+transferObjectFromRoomToPlayer :: O.ObjectID -> RoomID -> World -> World
+                                       -- Get the Room given the RoomID
+transferObjectFromRoomToPlayer o r w = case (getRoom r w) of
+                                            -- Get the Object in the Room given the ObjectID
+                                            Just room -> case (getObject o room) of
+                                                            -- Add the Object to the Player inventory. Remove the Object from the Room. Replace the old Room with the new Room
+                                                            -- where the Object is missing.
+                                                            Just object -> World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w))
+                                                            -- Couldn't find corresponding Object in Room, do nothing.
+                                                            Nothing -> w
+                                            -- Couldn't find corresponding Room, do nothing.
+                                            Nothing -> w
+
+{-
+ - Gives a human readable String representation of the Player surroundings in the World.
+-}
+worldString :: World -> String
+worldString w = case (getPlayerRoom w) of
+                    Just room -> (roomString room) ++ (P.inventoryString (player w))
+                    Nothing -> ""

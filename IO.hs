@@ -32,4 +32,6 @@ import IOUtils
 parse :: [String] -> World -> World
 parse ("go":"to":room) w = go (listToString " " room) w
 parse ("go":room) w = go (listToString " " room) w
+parse ("pick":"up":obj) w = pickup (listToString " " obj) w
+parse ("pick":obj) w = pickup (listToString " " obj) w
 parse x w = w

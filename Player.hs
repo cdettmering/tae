@@ -21,6 +21,21 @@ Authors:
 -}
 
 module Player where
-import Room
+import qualified Room as R
+import qualified Object as O
+import qualified IOUtils as I
 
-data Player = Player {loc :: RoomID}
+data Player = Player {loc :: R.RoomID, inv :: [O.Object]}
+
+{-
+ - Puts an Object into the Player inventory
+-}
+addObject :: O.Object -> Player -> Player
+addObject obj p = Player (loc p) (obj : (inv p))
+
+{-
+ - Gives a human readable String representation of the Player inventory
+-}
+inventoryString :: Player -> String
+inventoryString (Player _ []) = ""
+inventoryString (Player _ objs) = "\nYou are carrying: " ++ (I.listToString ", " (O.names objs))

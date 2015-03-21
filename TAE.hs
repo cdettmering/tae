@@ -26,15 +26,14 @@ import qualified Data.Map as M
 import qualified World as W
 import qualified IO as I
 import qualified IOUtils as IU
+import qualified Player as P
 
 gameIOLoop :: W.World -> IO()
-gameIOLoop w = case (W.getPlayerRoom w) of
-                   Just room -> do 
-                                   print room
-                                   input <- getLine
-                                   let g = gameLoop input w
-                                   gameIOLoop g
-                   Nothing -> error "Room doesn't exist!"
+gameIOLoop w = do 
+               putStr (W.worldString w ++ "\n\n")
+               input <- getLine
+               let g = gameLoop input w
+               gameIOLoop g
 
 gameLoop :: String -> W.World -> W.World
 gameLoop s w = I.parse (IU.splitOnWhiteSpace s) w
