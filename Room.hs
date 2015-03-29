@@ -17,7 +17,7 @@ along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (c) 2015 Katie Jurek
 
 Authors:
-    Katie Jurek         admin@katiejurek.com
+    Katie Jurek             admin@katiejurek.com
     Chad Dettmering     chad.dettmering@gmail.com
 -}
 

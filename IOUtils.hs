@@ -18,7 +18,7 @@ Copyright (c) 2015 Chad Dettmering, Katie Jurek
 
 Authors:
     Chad Dettmering    chad.dettmering@gmail.com
-	Katie Jurek        admin@katiejurek.com
+	Katie Jurek            admin@katiejurek.com
 -}
 
 module IOUtils where
