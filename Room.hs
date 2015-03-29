@@ -59,7 +59,7 @@ isValidExit rid r = elem rid (exits r)
  - Retrieves an Object from the Room given the ObjectID, if it exists
 -}
 getObject :: O.ObjectID -> Room -> Maybe O.Object
-getObject oid r = L.find (\x -> if O.objectId x == oid then True else False) (objects r)
+getObject oid r = L.find (\x -> O.objectId x == oid) (objects r)
 
 {-
  - Removes the Object from the Room that corresponds to the given ObjectID
