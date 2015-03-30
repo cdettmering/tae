@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) 2015 Katie Jurek
+Copyright (c) 2015 Katie Jurek, Chad Dettmering
 
 Authors:
     Katie Jurek             admin@katiejurek.com
@@ -24,16 +24,17 @@ Authors:
 module Room where
 import IOUtils
 import qualified Object as O
+import qualified Person as P
 import qualified Data.List as L
 
 type RoomID = String
-data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID, objects :: [O.Object]}
+data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID, objects :: [O.Object], people :: [P.Person]}
 
 {-
  - Gives a human readable String of the Room
 -}
 roomString :: Room -> String
-roomString r = (title r) ++ "\n\n" ++ (desc r) ++ (exitsString (exits r)) ++ (objectsString (objects r))
+roomString r = (title r) ++ "\n\n" ++ (desc r) ++ (exitsString (exits r)) ++ (objectsString (objects r)) ++ (peopleString (people r))
 
 {-
  - Gives a human readable String representation of the exits in the Room
@@ -48,6 +49,13 @@ exitsString exts = "\nYou can go to: " ++ (listToString ", " exts)
 objectsString :: [O.Object] -> String
 objectsString [] = ""
 objectsString objs = "\nYou can see: " ++ (listToString ", " (O.names objs))
+
+{-
+ - Gives a human readable String representation of the people in the Room
+-}
+peopleString :: [P.Person] -> String
+peopleString [] = ""
+peopleString ppl = "\nYou can see: " ++ (listToString ", " (P.names ppl))
 
 {-
  - Given a RoomID and a Room, checks if RoomID is an exit of Room
@@ -66,5 +74,5 @@ getObject oid r = L.find (\x -> O.objectId x == oid) (objects r)
 -}
 removeObject :: O.ObjectID -> Room -> Room
 removeObject oid r = case (getObject oid r) of
-                        Just object -> Room (title r) (desc r) (exits r) (roomId r) (L.delete object (objects r))
+                        Just object -> Room (title r) (desc r) (exits r) (roomId r) (L.delete object (objects r)) (people r)
                         Nothing -> r

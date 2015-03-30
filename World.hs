@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) 2015 Katie Jurek
+Copyright (c) 2015 Katie Jurek, Chad Dettmering
 
 Authors:
     Katie Jurek             admin@katiejurek.com
@@ -25,6 +25,7 @@ module World where
 import qualified Data.Map as M
 import qualified Player as P
 import qualified Object as O
+import qualified Person as Prs
 import Room
 
 type WorldMap = M.Map RoomID Room
@@ -36,17 +37,116 @@ createWorld = World
                   player = P.Player "Dirt Trail" [],
                   wmap = M.fromList
                         [
-                           ("Dirt Trail", Room {title = "Dirt Trail", desc = "Dirt trail leading to castle", exits = ["Drawbridge"], roomId = "Dirt Trail", objects = [O.Object {O.name = "stick", O.desc = "stick from a tree", O.objectId = "stick", O.pickable = True}]}),
-                           ("Drawbridge", Room {title = "Drawbridge", desc = "Drawbridge over moat", exits = ["Courtyard", "Dirt Trail"], roomId = "Drawbridge", objects = []}),
-                           ("Courtyard", Room {title = "Courtyard", desc = "Courtyard", exits = ["Drawbridge", "Grand Hall", "SouthWest Tower", "SouthEast Tower", "West Path", "East Path", "Graveyard"], roomId = "Courtyard", objects = []}),
-                           ("Grand Hall", Room {title = "Grand Hall", desc = "Grand Hall", exits = ["Kitchen", "Bedroom", "Courtyard"], roomId = "Grand Hall", objects = []}),
-                           ("Kitchen", Room {title = "Kitchen", desc = "Kitchen", exits = ["Grand Hall", "West Path"], roomId = "Kitchen", objects = []}),
-                           ("Bedroom", Room {title = "Bedroom", desc = "Bedroom", exits = ["Grand Hall", "East Path"], roomId = "Bedroom", objects = []}),
-                           ("East Path", Room {title = "East Path", desc = "East Path", exits = ["Courtyard", "Bedroom", "SouthEast Tower", "Graveyard"], roomId = "East Path", objects = []}),
-                           ("West Path", Room {title = "West Path", desc = "West Path", exits = ["Courtyard", "Kitchen", "SouthWest Tower"], roomId = "West Path", objects = []}),
-                           ("SouthWest Tower", Room {title = "SouthWest Tower", desc = "SouthWest Tower", exits = ["Courtyard", "West Path"], roomId = "SouthWest Tower", objects = []}),
-                           ("SouthEast Tower", Room {title = "SouthEast Tower", desc = "SouthEast Tower", exits = ["Courtyard", "East Path"], roomId = "SouthEast Tower", objects = []}),
-                           ("Graveyard", Room {title = "Graveyard", desc = "Graveyard", exits = ["Courtyard", "East Path"], roomId = "Graveyard", objects = []})
+                           ("Dirt Trail", Room 
+                                            {
+                                                title = "Dirt Trail", 
+                                                desc = "Dirt trail leading to castle", 
+                                                exits = ["Drawbridge"], 
+                                                roomId = "Dirt Trail", 
+                                                objects = [O.Object {O.name = "stick", O.desc = "stick from a tree", O.objectId = "stick", O.pickable = True}],
+                                                people = []
+                                            }
+                           ),
+                           ("Drawbridge", Room 
+                                                {
+                                                    title = "Drawbridge", 
+                                                    desc = "Drawbridge over moat", 
+                                                    exits = ["Courtyard", "Dirt Trail"], 
+                                                    roomId = "Drawbridge", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                           ),
+                           ("Courtyard", Room 
+                                                {
+                                                    title = "Courtyard", 
+                                                    desc = "Courtyard", 
+                                                    exits = ["Drawbridge", "Grand Hall", "SouthWest Tower", "SouthEast Tower", "West Path", "East Path", "Graveyard"], 
+                                                    roomId = "Courtyard", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                           ),
+                           ("Grand Hall", Room 
+                                                {
+                                                    title = "Grand Hall", 
+                                                    desc = "Grand Hall", 
+                                                    exits = ["Kitchen", "Bedroom", "Courtyard"], 
+                                                    roomId = "Grand Hall", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                           ),
+                           ("Kitchen", Room 
+                                            {
+                                                title = "Kitchen", 
+                                                desc = "Kitchen", 
+                                                exits = ["Grand Hall", "West Path"], 
+                                                roomId = "Kitchen", 
+                                                objects = [],
+                                                people = [Prs.Person {Prs.name = "Zombie Maid", Prs.desc = "A zombie maid. She looks pale.", Prs.personId = "Zombie Maid"}]
+                                            }
+                           ),
+                           ("Bedroom", Room 
+                                            {
+                                                title = "Bedroom", 
+                                                desc = "Bedroom", 
+                                                exits = ["Grand Hall", "East Path"], 
+                                                roomId = "Bedroom", 
+                                                objects = [],
+                                                people = []
+                                            }
+                           ),
+                           ("East Path", Room 
+                                                {
+                                                    title = "East Path", 
+                                                    desc = "East Path", 
+                                                    exits = ["Courtyard", "Bedroom", "SouthEast Tower", "Graveyard"], 
+                                                    roomId = "East Path", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                           ),
+                           ("West Path", Room 
+                                                {
+                                                    title = "West Path", 
+                                                    desc = "West Path", 
+                                                    exits = ["Courtyard", "Kitchen", "SouthWest Tower"], 
+                                                    roomId = "West Path", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                           ),
+                           ("SouthWest Tower", Room 
+                                                            {
+                                                                title = "SouthWest Tower", 
+                                                                desc = "SouthWest Tower", 
+                                                                exits = ["Courtyard", "West Path"], 
+                                                                roomId = "SouthWest Tower", 
+                                                                objects = [],
+                                                                people = []
+                                                            }
+                           ),
+                           ("SouthEast Tower", Room 
+                                                            {
+                                                                title = "SouthEast Tower", 
+                                                                desc = "SouthEast Tower", 
+                                                                exits = ["Courtyard", "East Path"], 
+                                                                roomId = "SouthEast Tower", 
+                                                                objects = [],
+                                                                people = []
+                                                            }
+                           ),
+                           ("Graveyard", Room 
+                                                {
+                                                    title = "Graveyard", 
+                                                    desc = "Graveyard", 
+                                                    exits = ["Courtyard", "East Path"], 
+                                                    roomId = "Graveyard", 
+                                                    objects = [],
+                                                    people = []
+                                                }
+                            )
                         ]
               }
 
