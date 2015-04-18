@@ -29,7 +29,7 @@ import qualified Person as Prs
 import Room
 
 type WorldMap = M.Map RoomID Room
-data World = World {player :: P.Player, wmap :: WorldMap}
+data World = World {player :: P.Player, wmap :: WorldMap, output :: String}
 
 createWorld :: World
 createWorld = World
@@ -147,14 +147,15 @@ createWorld = World
                                                 people = []
                                             }
                             )
-                        ]
+                        ],
+                output = ""
               }
 
 {-
  - Given a RoomID and the World, return the Room that matches the RoomID, if any
 -}
 getRoom :: RoomID -> World -> Maybe Room
-getRoom r World {player = p, wmap = w}  = M.lookup r w
+getRoom r World {player = p, wmap = w, output = o}  = M.lookup r w
 
 {-
  - Get the Room the Player is currently in
@@ -180,7 +181,7 @@ transferObjectFromRoomToPlayer o r w = case (getRoom r w) of
                                             Just room -> case (getObject o room) of
                                                             -- Add the Object to the Player inventory. Remove the Object from the Room. Replace the old Room with the new Room
                                                             -- where the Object is missing.
-                                                            Just object -> World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w))
+                                                            Just object -> World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w)) (output w)
                                                             -- Couldn't find corresponding Object in Room, do nothing.
                                                             Nothing -> w
                                             -- Couldn't find corresponding Room, do nothing.
@@ -193,3 +194,22 @@ worldString :: World -> String
 worldString w = case (getPlayerRoom w) of
                     Just room -> (roomString room) ++ (P.inventoryString (player w))
                     Nothing -> ""
+
+{-
+ - Adds a String to the current output String to display to the Player in the World.
+-}
+addToOutput :: World -> String -> World
+addToOutput w "" = w
+addToOutput World {player = p, wmap = w, output = o} s = World p w (o ++ s)
+
+{-
+ - Resets the World's output String to the empty String.
+-}
+resetOutput :: World -> World
+resetOutput World {player = p, wmap = w, output = o} = World p w ""
+
+{-
+ - Sets the World's output String to the given String (by resetting to "" and then adding the String to the output).
+-}
+setOutput :: World -> String -> World
+setOutput w s = addToOutput (resetOutput w) s
