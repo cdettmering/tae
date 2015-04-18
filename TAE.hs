@@ -30,7 +30,7 @@ import qualified Player as P
 
 gameIOLoop :: W.World -> IO()
 gameIOLoop w = do 
-               putStr (W.worldString w ++ "\n\n")
+               putStr (W.output w ++ "\n\n")
                input <- getLine
                let g = gameLoop input w
                gameIOLoop g
@@ -39,4 +39,4 @@ gameLoop :: String -> W.World -> W.World
 gameLoop s w = I.parse (IU.splitOnWhiteSpace s) w
 
 main :: IO()
-main = let world = W.createWorld in gameIOLoop world
+main = let world = W.createWorld in gameIOLoop (W.setOutput world (W.worldString world))

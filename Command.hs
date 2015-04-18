@@ -36,7 +36,7 @@ go :: R.RoomID -> W.World -> W.World
 go rid w = case (W.getPlayerRoom w) of
                 Just room -> case (R.isValidExit rid room) of
                                 -- If room is a valid exit then set Player location to new room
-                                True -> W.World (P.Player rid (P.inv (W.player w ))) (W.wmap w)
+                                True -> let world = (W.World (P.Player rid (P.inv (W.player w ))) (W.wmap w) (W.output w)) in W.setOutput world (W.worldString world)
                                 -- If room is not a valid exit from current room, do not modify World
                                 False -> w
                 -- If room cannot be found do not modify World
@@ -49,6 +49,6 @@ go rid w = case (W.getPlayerRoom w) of
 pickup :: O.ObjectID -> W.World -> W.World
 pickup oid w = case (W.getPlayerRoom w) of
                 Just room -> case (R.getObject oid room) of
-                                Just object -> W.transferObjectFromRoomToPlayer oid (R.roomId room) w
+                                Just object -> let world = (W.transferObjectFromRoomToPlayer oid (R.roomId room) w) in W.setOutput world (W.worldString world)
                                 Nothing -> w
                 Nothing -> w
