@@ -24,6 +24,8 @@ Authors:
 module IO where
 import Command
 import World
+import Look
+import Room
 import qualified Data.List as L
 
 {-
@@ -34,4 +36,6 @@ parse ("go":"to":room) w = go (L.intercalate " " room) w
 parse ("go":room) w = go (L.intercalate " " room) w
 parse ("pick":"up":obj) w = pickup (L.intercalate " " obj) w
 parse ("pick":obj) w = pickup (L.intercalate " " obj) w
+parse ("look":"at":l) w = look (L.intercalate " " l) w
+parse ("look":l) w = look (L.intercalate " " l ) w
 parse x w = w

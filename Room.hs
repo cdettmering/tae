@@ -24,7 +24,9 @@ Authors:
 module Room where
 import qualified Object as O
 import qualified Person as P
+import qualified Look as LO
 import qualified Data.List as L
+import qualified Data.Maybe as M
 
 type RoomID = String
 data Room = Room {title :: String, desc :: String, exits :: [RoomID], roomId :: RoomID, objects :: [O.Object], people :: [P.Person]}
@@ -65,8 +67,14 @@ isValidExit rid r = elem rid (exits r)
 {-
  - Retrieves an Object from the Room given the ObjectID, if it exists
 -}
-getObject :: O.ObjectID -> Room -> Maybe O.Object
+getObject :: O.ObjectID -> Room -> M.Maybe O.Object
 getObject oid r = L.find (\x -> O.objectId x == oid) (objects r)
+
+{-
+ - Retrieves a Person from the Room given the PersonID, if it exists
+-}
+getPerson :: P.PersonID -> Room -> M.Maybe P.Person
+getPerson pid r = L.find (\x -> P.personId x == pid) (people r)
 
 {-
  - Removes the Object from the Room that corresponds to the given ObjectID

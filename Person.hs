@@ -30,6 +30,7 @@ data Person = Person {name :: String, desc :: String, personId :: PersonID} deri
 instance L.Look Person where
     getDescription p = desc p
     getName p = name p
+    getFull p = (name p) ++ "\n\n" ++ (desc p)
 
 {-
  - Puts the names of the Persons into a list of Strings

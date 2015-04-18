@@ -23,6 +23,7 @@ Authors:
 
 module World where
 import qualified Data.Map as M
+import qualified Data.Maybe as MA
 import qualified Player as P
 import qualified Object as O
 import qualified Person as Prs
@@ -160,8 +161,9 @@ getRoom r World {player = p, wmap = w, output = o}  = M.lookup r w
 {-
  - Get the Room the Player is currently in
 -}
-getPlayerRoom :: World -> Maybe Room
-getPlayerRoom w = getRoom (P.loc (player w)) w 
+getPlayerRoom :: World -> Room
+-- Player should always be in  a room so this is acceptable
+getPlayerRoom w = MA.fromJust (getRoom (P.loc (player w)) w)
 
 {-
  - Replaces the Room corresponding to the given RoomId with the new given
@@ -191,9 +193,8 @@ transferObjectFromRoomToPlayer o r w = case (getRoom r w) of
  - Gives a human readable String representation of the Player surroundings in the World.
 -}
 worldString :: World -> String
-worldString w = case (getPlayerRoom w) of
-                    Just room -> (roomString room) ++ (P.inventoryString (player w))
-                    Nothing -> ""
+worldString w = let room = getPlayerRoom w in
+                    (roomString room) ++ (P.inventoryString (player w))
 
 {-
  - Adds a String to the current output String to display to the Player in the World.

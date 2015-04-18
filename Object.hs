@@ -29,6 +29,7 @@ data Object = Object {name :: String, desc :: String, objectId :: ObjectID,  pic
 instance L.Look Object where
     getDescription o = desc o
     getName o = name o
+    getFull o = (name o) ++ "\n\n" ++ (desc o)
 
 {-
  - Puts the names of the Objects into a list of Strings

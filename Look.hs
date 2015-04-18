@@ -27,3 +27,4 @@ module Look where
 class Look a where
     getDescription :: a -> String
     getName :: a -> String
+    getFull :: a -> String
