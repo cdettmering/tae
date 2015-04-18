@@ -22,9 +22,14 @@ Authors:
 -}
 
 module Person where
+import qualified Look as L
 
 type PersonID = String 
 data Person = Person {name :: String, desc :: String, personId :: PersonID} deriving Eq
+
+instance L.Look Person where
+    getDescription p = desc p
+    getName p = name p
 
 {-
  - Puts the names of the Persons into a list of Strings

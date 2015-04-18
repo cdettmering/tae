@@ -19,20 +19,11 @@ Copyright (c) 2015 Chad Dettmering
 Authors:
     Chad Dettmering     chad.dettmering@gmail.com
 -}
-
-module Object where
-import qualified Look as L
-
-type ObjectID = String 
-data Object = Object {name :: String, desc :: String, objectId :: ObjectID,  pickable :: Bool} deriving Eq
-
-instance L.Look Object where
-    getDescription o = desc o
-    getName o = name o
+module Look where
 
 {-
- - Puts the names of the Objects into a list of Strings
+ - Typeclass for anything that can be used in the look command
 -}
-names :: [Object] -> [String]
-names [] = []
-names (x:xs) = name x : names xs
+class Look a where
+    getDescription :: a -> String
+    getName :: a -> String
