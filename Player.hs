@@ -23,7 +23,7 @@ Authors:
 module Player where
 import qualified Room as R
 import qualified Object as O
-import qualified IOUtils as I
+import qualified Data.List as L
 
 data Player = Player {loc :: R.RoomID, inv :: [O.Object]}
 
@@ -38,4 +38,4 @@ addObject obj p = Player (loc p) (obj : (inv p))
 -}
 inventoryString :: Player -> String
 inventoryString (Player _ []) = ""
-inventoryString (Player _ objs) = "\nYou are carrying: " ++ (I.listToString ", " (O.names objs))
+inventoryString (Player _ objs) = "\nYou are carrying: " ++ (L.intercalate ", " (O.names objs))

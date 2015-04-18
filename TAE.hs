@@ -23,10 +23,10 @@ Authors:
 
 import Data.Maybe
 import qualified Data.Map as M
+import qualified Data.List as L
 import qualified World as W
-import qualified IO as I
-import qualified IOUtils as IU
 import qualified Player as P
+import qualified IO as I
 
 gameIOLoop :: W.World -> IO()
 gameIOLoop w = do 
@@ -36,7 +36,7 @@ gameIOLoop w = do
                gameIOLoop g
 
 gameLoop :: String -> W.World -> W.World
-gameLoop s w = I.parse (IU.splitOnWhiteSpace s) w
+gameLoop s w = I.parse (L.words s) w
 
 main :: IO()
 main = let world = W.createWorld in gameIOLoop world

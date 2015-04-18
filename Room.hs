@@ -22,7 +22,6 @@ Authors:
 -}
 
 module Room where
-import IOUtils
 import qualified Object as O
 import qualified Person as P
 import qualified Data.List as L
@@ -41,21 +40,21 @@ roomString r = (title r) ++ "\n\n" ++ (desc r) ++ (exitsString (exits r)) ++ (ob
 -}
 exitsString :: [RoomID] -> String
 exitsString [] = ""
-exitsString exts = "\nYou can go to: " ++ (listToString ", " exts)
+exitsString exts = "\nYou can go to: " ++ (L.intercalate ", " exts)
 
 {-
  - Gives a human readable String representation of the objects in the Room
 -}
 objectsString :: [O.Object] -> String
 objectsString [] = ""
-objectsString objs = "\nYou can see: " ++ (listToString ", " (O.names objs))
+objectsString objs = "\nYou can see: " ++ (L.intercalate ", " (O.names objs))
 
 {-
  - Gives a human readable String representation of the people in the Room
 -}
 peopleString :: [P.Person] -> String
 peopleString [] = ""
-peopleString ppl = "\nYou can see: " ++ (listToString ", " (P.names ppl))
+peopleString ppl = "\nYou can see: " ++ (L.intercalate ", " (P.names ppl))
 
 {-
  - Given a RoomID and a Room, checks if RoomID is an exit of Room

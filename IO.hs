@@ -24,14 +24,14 @@ Authors:
 module IO where
 import Command
 import World
-import IOUtils
+import qualified Data.List as L
 
 {-
  - Given the player input as a [String], parse the input and execute the command if any.
 -}
 parse :: [String] -> World -> World
-parse ("go":"to":room) w = go (listToString " " room) w
-parse ("go":room) w = go (listToString " " room) w
-parse ("pick":"up":obj) w = pickup (listToString " " obj) w
-parse ("pick":obj) w = pickup (listToString " " obj) w
+parse ("go":"to":room) w = go (L.intercalate " " room) w
+parse ("go":room) w = go (L.intercalate " " room) w
+parse ("pick":"up":obj) w = pickup (L.intercalate " " obj) w
+parse ("pick":obj) w = pickup (L.intercalate " " obj) w
 parse x w = w
