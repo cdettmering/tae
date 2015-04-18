@@ -185,9 +185,15 @@ transferObjectFromRoomToPlayer o r w = case (getRoom r w) of
                                                             -- where the Object is missing.
                                                             Just object -> World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w)) (output w)
                                                             -- Couldn't find corresponding Object in Room, do nothing.
-                                                            Nothing -> w
+                                                            Nothing -> failedTransfer w
                                             -- Couldn't find corresponding Room, do nothing.
-                                            Nothing -> w
+                                            Nothing -> failedTransfer w
+
+{-
+ - Transfer failed: tell user they can't pick the item up.
+-}
+failedTransfer :: World -> World
+failedTransfer w = setOutput w ("You can't pick that up.")
 
 {-
  - Gives a human readable String representation of the Player surroundings in the World.

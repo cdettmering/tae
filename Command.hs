@@ -49,7 +49,7 @@ pickup :: O.ObjectID -> W.World -> W.World
 pickup oid w = let room = W.getPlayerRoom w in
                    case (R.getObject oid room) of
                        Just object -> let world = (W.transferObjectFromRoomToPlayer oid (R.roomId room) w) in W.setOutput world (W.worldString world)
-                       Nothing -> w
+                       Nothing -> W.failedTransfer w
 
 {-
  - Given an unkown ID this attempts to look at something in the current room.
