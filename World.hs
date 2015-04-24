@@ -177,17 +177,11 @@ replaceRoom rid r w = M.adjust (\x -> r) rid w
  - to the given RoomID to the Player
 -}
 transferObjectFromRoomToPlayer :: O.ObjectID -> RoomID -> World -> World
-                                       -- Get the Room given the RoomID
-transferObjectFromRoomToPlayer o r w = case (getRoom r w) of
-                                            -- Get the Object in the Room given the ObjectID
-                                            Just room -> case (getObject o room) of
-                                                            -- Add the Object to the Player inventory. Remove the Object from the Room. Replace the old Room with the new Room
-                                                            -- where the Object is missing.
-                                                            Just object -> World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w)) (output w)
-                                                            -- Couldn't find corresponding Object in Room, do nothing.
-                                                            Nothing -> failedTransfer w
-                                            -- Couldn't find corresponding Room, do nothing.
-                                            Nothing -> failedTransfer w
+transferObjectFromRoomToPlayer o r w = MA.fromMaybe (failedTransfer w) (do
+                                                                         room <- getRoom r w
+                                                                         object <- getObject o room
+                                                                         Just (World (P.addObject object (player w)) (replaceRoom r (removeObject (O.objectId object) room) (wmap w)) (output w))
+                                                                       )
 
 {-
  - Transfer failed: tell user they can't pick the item up.

@@ -80,6 +80,7 @@ getPerson pid r = L.find (\x -> P.personId x == pid) (people r)
  - Removes the Object from the Room that corresponds to the given ObjectID
 -}
 removeObject :: O.ObjectID -> Room -> Room
-removeObject oid r = case (getObject oid r) of
-                        Just object -> Room (title r) (desc r) (exits r) (roomId r) (L.delete object (objects r)) (people r)
-                        Nothing -> r
+removeObject oid r = M.fromMaybe r (do
+                                       object <- getObject oid r
+                                       Just (Room (title r) (desc r) (exits r) (roomId r) (L.delete object (objects r)) (people r))
+                                   )

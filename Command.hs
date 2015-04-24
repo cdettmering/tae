@@ -27,6 +27,7 @@ import qualified Player as P
 import qualified World as W
 import qualified Object as O
 import qualified Look as L
+import qualified Data.Maybe as M
 
 {-
  - Given a RoomID and the World, move the player to the room identified
@@ -46,10 +47,12 @@ go rid w = let room = W.getPlayerRoom w in
  - This removes the Object from the current Room and puts it into the Player inventory.
 -}
 pickup :: O.ObjectID -> W.World -> W.World
-pickup oid w = let room = W.getPlayerRoom w in
-                   case (R.getObject oid room) of
-                       Just object -> let world = (W.transferObjectFromRoomToPlayer oid (R.roomId room) w) in W.setOutput world (W.worldString world)
-                       Nothing -> W.failedTransfer w
+pickup oid w = M.fromMaybe (W.failedTransfer w) (do
+                                                    let room = W.getPlayerRoom w
+                                                    object <- R.getObject oid room
+                                                    let world = W.transferObjectFromRoomToPlayer oid (R.roomId room) w
+                                                    Just (W.setOutput world (W.worldString world))
+                                                )
 
 {-
  - Given an unkown ID this attempts to look at something in the current room.
