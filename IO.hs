@@ -15,10 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with TAE.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (c) 2015 Chad Dettmering
+Copyright (c) 2015 Chad Dettmering, Katie Jurek
 
 Authors:
     Chad Dettmering     chad.dettmering@gmail.com
+    Katie Jurek             admin@katiejurek.com
 -}
 
 module IO where
@@ -26,6 +27,7 @@ import Command
 import World
 import Look
 import Room
+import Person
 import qualified Data.List as L
 
 {-
@@ -38,4 +40,6 @@ parse ("pick":"up":obj) w = pickup (L.intercalate " " obj) w
 parse ("pick":obj) w = pickup (L.intercalate " " obj) w
 parse ("look":"at":l) w = look (L.intercalate " " l) w
 parse ("look":l) w = look (L.intercalate " " l ) w
+parse ("talk":"to":prs) w = talk (L.intercalate " " prs) w
+parse ("talk":prs) w = talk (L.intercalate " " prs) w
 parse x w = w

@@ -24,6 +24,7 @@ Authors:
 module Command where
 import qualified Room as R
 import qualified Player as P
+import qualified Person as Prs
 import qualified World as W
 import qualified Object as O
 import qualified Look as L
@@ -55,9 +56,9 @@ pickup oid w = M.fromMaybe (W.failedTransfer w) (do
                                                 )
 
 {-
- - Given an unkown ID this attempts to look at something in the current room.
+ - Given an unknown ID, this attempts to look at something in the current room.
  - First an object is located, if the object does not exist, then a person
- - is located. If neither exist then an error message is output.
+ - is located. If neither exist then an error message is outputted.
 -}
 look :: String -> W.World -> W.World
 look l w = let room = W.getPlayerRoom w in 
@@ -66,3 +67,13 @@ look l w = let room = W.getPlayerRoom w in
                               Nothing -> case (R.getPerson l room) of
                                              Just person -> W.setOutput w (L.getDescription person)
                                              Nothing -> W.setOutput w ("You don't see that here.")
+
+{-
+ - Given a PersonID, we fetch the dialogue from that Person and display it as part of the worldString.
+-}
+talk :: Prs.PersonID -> W.World -> W.World
+talk pid w = M.fromMaybe (W.setOutput w "...") (do
+                                                    let r = W.getPlayerRoom w
+                                                    person <- R.getPerson pid r
+                                                    Just (W.setOutput w (Prs.dialogue person))
+                                                )

@@ -25,7 +25,7 @@ module Person where
 import qualified Look as L
 
 type PersonID = String 
-data Person = Person {name :: String, desc :: String, personId :: PersonID} deriving Eq
+data Person = Person {name :: String, desc :: String, personId :: PersonID, dialogue :: String} deriving Eq
 
 instance L.Look Person where
     getDescription p = desc p

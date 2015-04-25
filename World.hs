@@ -85,7 +85,7 @@ createWorld = World
                                                 exits = ["Grand Hall", "West Path"], 
                                                 roomId = "Kitchen", 
                                                 objects = [],
-                                                people = [Prs.Person {Prs.name = "Zombie Maid", Prs.desc = "A zombie maid. She looks pale.", Prs.personId = "Zombie Maid"}]
+                                                people = [Prs.Person {Prs.name = "Zombie Maid", Prs.desc = "A zombie maid. She looks pale.", Prs.personId = "Zombie Maid", Prs.dialogue = "She turns to you slowly. \"Are you new here, dearrr?\" she said with an unsettling, lopsided grin."}]
                                             }
                            ),
                            ("Bedroom", Room 
