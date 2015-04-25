@@ -73,7 +73,7 @@ look l w = let room = W.getPlayerRoom w in
 -}
 talk :: Prs.PersonID -> W.World -> W.World
 talk pid w = M.fromMaybe (W.setOutput w "...") (do
-                                                    let r = W.getPlayerRoom w
-                                                    person <- R.getPerson pid r
-                                                    Just (W.setOutput w (Prs.dialogue person))
-                                                )
+                                                   let r = W.getPlayerRoom w
+                                                   person <- R.getPerson pid r
+                                                   Just (W.setOutput w (Prs.dialogue person))
+                                               )
