@@ -45,7 +45,7 @@ createWorld = World
                                                 exits = ["Drawbridge"], 
                                                 roomId = "Dirt Trail", 
                                                 objects = [O.Object {O.name = "stick", O.desc = "stick from a tree", O.objectId = "stick", O.pickable = True}],
-                                                people = []
+                                                people = [Prs.Person {Prs.name = "Wolf", Prs.desc = "A tattered-looking, gray wolf.", Prs.personId = "Wolf", Prs.dialogue = "He looks at you through narrowed eyes, growling under his breath."}]
                                             }
                            ),
                            ("Drawbridge", Room 
@@ -85,7 +85,7 @@ createWorld = World
                                                 exits = ["Grand Hall", "West Path"], 
                                                 roomId = "Kitchen", 
                                                 objects = [],
-                                                people = [Prs.Person {Prs.name = "Zombie Maid", Prs.desc = "A zombie maid. She looks pale.", Prs.personId = "Zombie Maid", Prs.dialogue = "She turns to you slowly. \"Are you new here, dearrr?\" she said with an unsettling, lopsided grin."}]
+                                                people = [Prs.Person {Prs.name = "Zombie Maid", Prs.desc = "A zombie maid. She looks pale.", Prs.personId = "Zombie Maid", Prs.dialogue = "She turns to you slowly. \"Are you new here, dearrr?\" she says with an unsettling, lopsided grin."}]
                                             }
                            ),
                            ("Bedroom", Room 
@@ -145,7 +145,7 @@ createWorld = World
                                                 exits = ["Courtyard", "East Path"], 
                                                 roomId = "Graveyard", 
                                                 objects = [],
-                                                people = []
+                                                people = [Prs.Person {Prs.name = "Pastor", Prs.desc = "A somber pastor. His head is bowed as he looks upon a particularly grand tombstone.", Prs.personId = "Pastor", Prs.dialogue = "Not even glancing at you, he only whispers repeatedly, \"Shame, shame, shame...\""}]
                                             }
                             )
                         ],
