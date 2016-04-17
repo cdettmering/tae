@@ -94,8 +94,8 @@ createWorld = World
                                                 desc = "Bedroom", 
                                                 exits = ["Grand Hall", "East Path"], 
                                                 roomId = "Bedroom", 
-                                                objects = [],
-                                                people = []
+                                                objects = [O.Object {O.name = "hairbrush", O.desc = "a hairbrush", O.objectId = "hairbrush", O.pickable = True}],
+                                                people = [Prs.Person {Prs.name = "Girl", Prs.desc = "A girl sitting down in a chair before her mirror, looking fretful.", Prs.personId = "Girl", Prs.dialogue = "\"I need to get this knot out before the ball. Can you help me?\""}]
                                             }
                            ),
                            ("East Path", Room 
@@ -125,7 +125,7 @@ createWorld = World
                                                 exits = ["Courtyard", "West Path"], 
                                                 roomId = "SouthWest Tower", 
                                                 objects = [],
-                                                people = []
+                                                people = [Prs.Person {Prs.name = "Priest", Prs.desc = "A priest looking out the window.", Prs.personId = "Priest", Prs.dialogue = "The priest, though seeming hostile in his body language, stares at you with an eerie calmness."}]
                                             }
                            ),
                            ("SouthEast Tower", Room 
